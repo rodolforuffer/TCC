@@ -46,7 +46,7 @@
 	//2.Use app id,secret and redirect url
 	 $app_id = '1626914787539438';
 	 $app_secret = 'a8be139b93eb4090e1527f6e25f91981';
-	 $redirect_url='http://packetcode.com/apps/fblogin-basic/';
+	 $redirect_url='tcc-data-mining.herokuapp.com/';
 
 	 //3.Initialize application, create helper object and get fb sess
 	 FacebookSession::setDefaultApplication($app_id,$app_secret);
