@@ -65,7 +65,6 @@
 		echo "Olá $name, Obrigado por participar do meu projeto";
 	}else{
 		//else echo login
-		echo '<a href='$loginUrl'>Aceite nosso aplicativo!</a>';
-		echo "<strong><em>Voc&ecirc; n&atilde;o esta conectado..</em></strong>";
+		echo '<a href="'.$helper->getLoginUrl().'">Aceite nosso aplicativo!</a>'
 	}
 
