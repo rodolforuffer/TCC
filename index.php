@@ -51,10 +51,10 @@ try {
 
 if ($session) {
 	try {
-		// $request = new FacebookRequest($session, 'GET', '/me');
-		// $response = $request->execute();
-		// $me = $response->getGraphObject();
-		// echo $me->getProperty('name');
+		 $request = new FacebookRequest($session, 'GET', '/me');
+		 $response = $request->execute();
+		 $me = $response->getGraphObject();
+		 echo $me->getProperty('name');
 		} catch(FacebookRequestException $e) {
 		echo $e->getMessage();
 	}
