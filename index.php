@@ -46,25 +46,31 @@
 	//2.Use app id,secret and redirect url
 	 $app_id = '1626914787539438';
 	 $app_secret = 'a8be139b93eb4090e1527f6e25f91981';
-	 $redirect_url='http://tcc-data-mining.herokuapp.com';
-
+	 
 	 //3.Initialize application, create helper object and get fb sess
 	 FacebookSession::setDefaultApplication($app_id,$app_secret);
-	 $helper = new FacebookCanvasLoginHelper ();
-	 $sess = $helper->getSession();
-
-	//4. if fb sess exists echo name
-	 	if(isset($sess)){
-	 		//create request object,execute and capture response
-		$request = new FacebookRequest($sess, 'GET', '/me');
-		// from response get graph object
-		$response = $request->execute();
-		$graph = $response->getGraphObject(GraphUser::className());
-		// use graph object methods to get user details
-		$name= $graph->getName();
-		echo "Olá $name, Obrigado por participar do meu projeto";
-	}else{
-		//else echo login
-		echo '<a href="'.$helper->getLoginUrl().'">Aceite nosso aplicativo!</a>';
-	}
+	 $helper = new FacebookCanvasLoginHelper();
+	 
+	 try{
+	 	$session = $helper->getSession();
+	 }catch (FacebookRequestException $e){
+	 	echo  $getMessage();
+	 }catch (\Exception $ex){
+	 	echo $e->getMessage();
+	 }
+	 
+	 if ($session){
+	 	try{
+	 		$request = new FacebookRequest($session, 'GET', '/me');
+	 		$response = $request->execute();
+	 		$me = $response->getGraphObject();
+	 		echo $me->getProperty('name');
+	 	}catch (FacebookRequestException $e){
+	 		echo $e->getMessage();
+	 	}
+	 }else{
+	 	$helper = new FacebookRedirectLoginHelper('https://apps.facebook.com/tccmineracaodedados/');
+	 	$auth_url = $helper->getLoginUrl(array('email','user_friends'));
+	 	echo "<script>window.top.location.href='".$auth_url."'</script>";
+	 }
 
