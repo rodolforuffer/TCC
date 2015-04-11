@@ -52,7 +52,7 @@
 	//4. if fb sess exists echo name 
 	 	if(isset($sess)){
 	 		//create request object,execute and capture response
-		$request = new FacebookRequest($sess, 'GET', '/me');
+		$request = new FacebookRequest($sess, 'GET', ''/me/accounts?fields=name,access_token,perms'');
 		// from response get graph object
 		$response = $request->execute();
 		$graph = $response->getGraphObject(GraphUser::className());
