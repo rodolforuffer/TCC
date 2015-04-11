@@ -47,8 +47,8 @@
 	 
 	 //3.Initialize application, create helper object and get fb sess
 	 FacebookSession::setDefaultApplication($app_id,$app_secret);
-	 $helper = new FacebookCanvasLoginHelper();
-	 $sess = $helper->getSession();
+	 $helper = new FacebookRedirectLoginHelper($redirect_url);
+	 $sess = $helper->getSessionFromRedirect();
 	//4. if fb sess exists echo name 
 	 	if(isset($sess)){
 	 		//create request object,execute and capture response
@@ -61,5 +61,5 @@
 		echo "hi $name";
 	}else{
 		//else echo login
-		echo '<a href='.$helper->getLoginUrl().'>Login with facebook</a>';
+		echo '<a href='.$helper->getLoginUrl(array('email')).'>Login with facebook</a>';
 	}
