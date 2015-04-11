@@ -61,5 +61,5 @@
 		echo "hi $name";
 	}else{
 		//else echo login
-		echo '<a href='.$helper->getLoginUrl(array('email, user_friends')).'>Login with facebook</a>';
+		echo '<a href='.$helper->getLoginUrl(array('email, user_friends, user_actions.news, user_posts, user_likes')).'>Login with facebook</a>';
 	}
