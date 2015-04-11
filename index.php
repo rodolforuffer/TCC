@@ -51,6 +51,15 @@
 	 $sess = $helper->getSessionFromRedirect();
 	//4. if fb sess exists echo name 
 	 	if(isset($sess)){
+		//Acess long token
+		// User logged in, get the AccessToken entity.
+        $accessToken = $session->getAccessToken();
+        // Exchange the short-lived token for a long-lived token.
+        $longLivedAccessToken = $accessToken->extend();
+        // Now store the long-lived token in the database
+        // . . . $db->store($longLivedAccessToken);
+        // Make calls to Graph with the long-lived token.
+        // . . . 
 	 		//create request object,execute and capture response
 		$request = new FacebookRequest($sess, 'GET', '/me');
 		// from response get graph object
