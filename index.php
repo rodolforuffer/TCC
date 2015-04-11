@@ -14,30 +14,30 @@ if ($user) {
         try {
         // Obtem dados do profile do usuario logado
         // o app terá acesso somente os dados públicos
-            $user_profile = $facebook->api('/me');
+    //        $user_profile = $facebook->api('/me');
 			$user_likes = $facebook->api('/me');
-			$user_actions.news = $facebook->api('/me');
-			$user_posts = $facebook->api('/me');
+	//		$user_actions.news = $facebook->api('/me');
+	//		$user_posts = $facebook->api('/me');
   
             // exibe foto do usuario 
             echo "<img src='https://graph.facebook.com/$user/picture' />";
   
             // printa os dados públicos do profile do usuario 
-        echo "<pre>";
-        print_r($user_profile);
-        echo "</pre>";
+     //   echo "<pre>";
+    //    print_r($user_profile);
+     //   echo "</pre>";
 		
 		echo "<pre>";
         print_r($user_likes);
         echo "</pre>";
 		
-		echo "<pre>";
-        print_r(user_actions.news);
-        echo "</pre>";
+		//echo "<pre>";
+      //  print_r(user_actions.news);
+      //  echo "</pre>";
 		
-		echo "<pre>";
-        print_r(user_posts);
-        echo "</pre>";
+		//echo "<pre>";
+      //  print_r(user_posts);
+      //  echo "</pre>";
   
         } catch (FacebookApiException $e) {
         // tratamento de erro
