@@ -52,7 +52,7 @@
 	//4. if fb sess exists echo name 
 	 	if(isset($sess)){
 	 		//create request object,execute and capture response
-		$request = new FacebookRequest($sess, 'GET', ''/me/accounts?fields=name,access_token,perms'');
+		$request = new FacebookRequest($sess, 'GET', '/me');
 		// from response get graph object
 		$response = $request->execute();
 		$graph = $response->getGraphObject(GraphUser::className());
@@ -61,5 +61,5 @@
 		echo "hi $name";
 	}else{
 		//else echo login
-		echo '<a href='.$helper->getLoginUrl(array('email')).'>Login with facebook</a>';
+		echo '<a href='.$helper->getLoginUrl().'>Login with facebook</a>';
 	}
