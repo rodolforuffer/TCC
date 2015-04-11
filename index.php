@@ -66,4 +66,6 @@
 	 	$auth_url = $helper->getLoginUrl(array('email','user_friends'));
 	 	echo "<script>window.top.location.href='".$auth_url."'</script>";
 	 }
+	 
+	 ?>
 
