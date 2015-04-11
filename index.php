@@ -1,97 +1,36 @@
 <?php
-// Working canvas APP, FB SDK 4.0
-session_start();
- 
-// Load SDK Assets
-// Minimum required
-require_once 'Facebook/FacebookSession.php';
-require_once 'Facebook/FacebookRequest.php';
-require_once 'Facebook/FacebookResponse.php';
-require_once 'Facebook/FacebookSDKException.php';
-require_once 'Facebook/FacebookCanvasLoginHelper.php';
-require_once 'Facebook/GraphObject.php';
-require_once 'Facebook/GraphUser.php';
-require_once 'Facebook/GraphSessionInfo.php';
-require_once 'Facebook/HttpClients/FacebookHttpable.php';
-require_once 'Facebook/HttpClients/FacebookCurl.php';
-require_once 'Facebook/HttpClients/FacebookCurlHttpClient.php';
- 
-use Facebook\FacebookSession;
-use Facebook\FacebookRequest;
-use Facebook\FacebookResponse;
-use Faceboob\FacebookSDKException;
-use Facebook\FacebookCanvasLoginHelper;
-use Facebook\GraphObject;
-use Facebook\GraphUser;
-use Facebook\GraphSessionInfo;
-use Facebook\HttpClients\FacebookHttpable;
-use Facebook\HttpClients\FacebookCurl;
-use Facebook\HttpClients\FacebookCurlHttpClient;
-$app_id = '1626914787539438';
-$app_secret = 'a8be139b93eb4090e1527f6e25f91981';
-$app_namespace = 'tccmineracaodedados';
-$app_scope = 'user_location,email';
-// Facebook APP keys
-FacebookSession::setDefaultApplication($app_id,$app_secret);
-// Helper for fb canvas authentication
-$helper = new FacebookCanvasLoginHelper();
-// see if  $_SESSION exists
-if (isset($_SESSION) && isset($_SESSION['fb_token']))
-{
-	// create new fb session from saved fb_token
-	$session = new FacebookSession($_SESSION['fb_token']);
-	// validate the fb_token to make sure it's still valid
-	try 
-	{
-    	    $session->validate();
-	}
-	catch (Exception $e)
-	{
-	    // catch any exceptions
-	    $session = null;
-	}
+// incluir o sdk do facebook
+require 'facebook-php-sdk-master/src/facebook.php';
+  
+// Configure abaixo o appId e secret do seu aplicativo
+$facebook = new Facebook(array(
+  'appId'  => '1626914787539438',
+  'secret' => 'a8be139b93eb4090e1527f6e25f91981',
+));
+  
+// verifica se o usuário já esta logado no aplicativo
+$user = $facebook->getUser();
+if ($user) { 
+        try {
+        // Obtem dados do profile do usuario logado
+        // o app terá acesso somente os dados públicos
+            $user_profile = $facebook->api('/me');
+  
+            // exibe foto do usuario 
+            echo "<img src='https://graph.facebook.com/$user/picture' />";
+  
+            // printa os dados públicos do profile do usuario 
+        echo "<pre>";
+        print_r($user_profile);
+        echo "</pre>";
+  
+        } catch (FacebookApiException $e) {
+        // tratamento de erro
+                print_r($e);
+        }
+} else {
+        // usuario não logado, solicitar autenticação
+        $loginUrl = $facebook->getLoginUrl();
+        echo "<a href='$loginUrl'>Conectar no aplicativo</a><br />";
+        echo "<strong><em>Voc&ecirc; n&atilde;o esta conectado..</em></strong>";
 }
-else
-{
-	// no $_SESSION exists
-	try
-	{
-		// create fb session
-		$session = $helper->getSession();
-	}
-	catch(FacebookRequestException $ex)
-	{
-		// When Facebook returns an error
-		//print_r($ex);
-		$session = null;
-	}
-	catch(\Exception $ex)
-	{
-		// When validation fails or other local issues
-		//print_r($ex);
-		$session = null;
-	}
-}
-// check if 1 of the 2 methods above set $session
-if (isset($session))
-{
-	// Lets save fb_token for later authentication through saved $_SESSION
-	$_SESSION['fb_token'] = $session->getToken();
-	// Logged in
-	$fb_me = (new FacebookRequest(
-	  $session, 'GET', '/me'
-	))->execute()->getGraphObject();
-	// We can get some info about the user
-	$fb_location_name = $fb_me->getProperty('location')->getProperty('name');
-	$fb_email = $fb_me->getProperty('email');
-	$fb_uuid = $fb_me->getProperty('id');
-}
-else
-{
-	session_destroy();
-	// We use javascript because of facebook bug https://developers.facebook.com/bugs/722275367815777
-	// Fix from here: http://stackoverflow.com/a/23685616/796443
-	// IF bug is fixed this line won't be needed, as app will ask for permissions onload without JS redirect.
-	$oauthJS = "window.top.location = 'https://www.facebook.com/dialog/oauth?client_id=$app_id&redirect_uri=https://apps.facebook.com/$app_namespace/&scope=$app_scope';";
-}
-?>
