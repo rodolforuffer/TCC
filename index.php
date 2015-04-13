@@ -7,6 +7,8 @@
  *	license			- GNU General Public License version 2 or later
 */
 /* INCLUSION OF LIBRARY FILEs*/
+session_start();
+
 require_once( 'lib/Facebook/HttpClients/FacebookHttpable.php' );
 require_once( 'lib/Facebook/HttpClients/FacebookCurl.php' );
 require_once( 'lib/Facebook/HttpClients/FacebookCurlHttpClient.php' );
@@ -49,7 +51,7 @@ use Facebook\GraphSessionInfo;
 /*PROCESS*/
 	
 	//1.Stat Session
-	 session_start();
+	 
 	//2.Use app id,secret and redirect url
 	 $app_id = '1626914787539438';
 	 $app_secret = 'a8be139b93eb4090e1527f6e25f91981';
@@ -57,8 +59,15 @@ use Facebook\GraphSessionInfo;
 	 
 	 //3.Initialize application, create helper object and get fb sess
 	 FacebookSession::setDefaultApplication($app_id,$app_secret);
-	 $helper = new FacebookRedirectLoginHelper($redirect_url);
-	 $sess = $helper->getSessionFromRedirect();
+	 $helper = new FacebookCanvasLoginHelper();
+
+     try {
+	 $session = $helper->getSession();
+     } catch (FacebookRequestException $ex) {
+	     echo $ex->getMessage();
+     } catch (\Exception $ex) {
+	     echo $ex->getMessage();
+     }
 	//4. if fb sess exists echo name 
 	 	if(isset($sess)){
 		//Acess long token
@@ -80,5 +89,6 @@ use Facebook\GraphSessionInfo;
 		echo "Olá $name";
 	}else{
 		//else echo login
-		echo '<a href='.$helper->getLoginUrl(array('email, user_friends')).'>Logando com o facebook</a>';
+		$helper = new FacebookRedirectLoginHelper('http://tcc-data-mining.herokuapp.com/');
+		echo '<a href='.$helper->getLoginUrl(array('email, user_friends, user_posts')).'>Logando com o facebook</a>';
 	}
