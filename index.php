@@ -90,5 +90,7 @@ use Facebook\GraphSessionInfo;
 	}else{
 		//else echo login
 		$helper = new FacebookRedirectLoginHelper('http://tcc-data-mining.herokuapp.com/');
-		echo '<a href='.$helper->getLoginUrl(array('email, user_friends, user_posts')).'>Logando com o facebook</a>';
+		$auth_url = $helper->getLoginUrl(array('email, user_friends'));
+	    echo "<script>window.top.location.href='".$auth_url."'</script>";
+		//echo '<a href='.$helper->getLoginUrl(array('email, user_friends, user_posts')).'>Logando com o facebook</a>';
 	}
