@@ -59,7 +59,7 @@ use Facebook\GraphSessionInfo;
 	 
 	 //3.Initialize application, create helper object and get fb sess
 	 FacebookSession::setDefaultApplication($app_id,$app_secret);
-	 $helper = new FacebookCanvasLoginHelper('http://tcc-data-mining.herokuapp.com/');
+	 $helper = new FacebookCanvasLoginHelper();
 
      try {
 	 $session = $helper->getSession();
@@ -89,6 +89,6 @@ use Facebook\GraphSessionInfo;
 		echo "Olá $name";
 	}else{
 		//else echo login
-		//$helper = new FacebookRedirectLoginHelper('http://tcc-data-mining.herokuapp.com/');
+		$helper = new FacebookRedirectLoginHelper('http://tcc-data-mining.herokuapp.com/');
 		echo '<a href='.$helper->getLoginUrl(array('email, user_friends, user_posts')).'>Logando com o facebook</a>';
 	}
