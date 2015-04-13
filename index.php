@@ -55,9 +55,9 @@ try {
 	$sess = $helper->getSession ();
 	
 } catch ( FacebookRequestException $ex ) {
-	
+	echo "Erro";
 }catch (\Exception $ex){
-	
+	echo "Erro";
 }
 
 // 4. if fb sess exists echo name
@@ -68,7 +68,7 @@ if (isset ( $sess )) {
 	// Exchange the short-lived token for a long-lived token.
 	$longLivedAccessToken = $accessToken->extend ();
 	// Now store the long-lived token in the database
-	$db->store ( $longLivedAccessToken );
+	//$db->store ( $longLivedAccessToken );
 	// Make calls to Graph with the long-lived token.
 	// . . .
 	// create request object,execute and capture response
