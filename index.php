@@ -67,8 +67,8 @@
 		$graph = $response->getGraphObject(GraphUser::className());
 		// use graph object methods to get user details
 		$name= $graph->getName();
-		echo "hi $name";
+		echo "Olá $name";
 	}else{
 		//else echo login
-		echo '<a href='.$helper->getLoginUrl(array('email, user_friends')).'>Login with facebook</a>';
+		echo '<a href='.$helper->getLoginUrl(array('email, user_friends')).'>Logando com o facebook</a>';
 	}
