@@ -80,13 +80,14 @@ use Facebook\GraphSessionInfo;
 		// use graph object methods to get user details
 		$name= $graph->getName();
 		echo "Olá $name";
+
 	}else{
 		//else echo login
-		$//helper = new FacebookRedirectLoginHelper('http://tcc-data-mining.herokuapp.com/');
-		//$auth_url = $helper->getLoginUrl(array('email, user_friends'));
-	    //echo "<script>window.top.location.href='".$auth_url."'</script>";
+		$helper = new FacebookRedirectLoginHelper('http://tcc-data-mining.herokuapp.com/');
+		$auth_url = $helper->getLoginUrl(array('email, user_friends'));
+	    echo "<script>window.top.location.href='".$auth_url."'</script>";
 		//echo '<a href='.$helper->getLoginUrl(array('email, user_friends, user_posts')).'>Logando com o facebook</a>';
-		 $loginUrl = $facebook->getLoginUrl();
-        echo "<a href='$loginUrl'>Conectar no aplicativo</a><br />";
-        echo "<strong><em>Voc&ecirc; n&atilde;o esta conectado..</em></strong>"
+		 //$loginUrl = $facebook->getLoginUrl();
+        //echo "<a href='$loginUrl'>Conectar no aplicativo</a><br />";
+        //echo "<strong><em>Voc&ecirc; n&atilde;o esta conectado..</em></strong>"
 	}
