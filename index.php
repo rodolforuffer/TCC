@@ -52,15 +52,8 @@ use Facebook\GraphSessionInfo;
 	 
 	 //3.Initialize application, create helper object and get fb sess
 	 FacebookSession::setDefaultApplication($app_id,$app_secret);
-	 $helper = new FacebookCanvasLoginHelper();
-
-     try {
-	 $session = $helper->getSession();
-     } catch (FacebookRequestException $ex) {
-	     echo $ex->getMessage();
-     } catch (\Exception $ex) {
-	     echo $ex->getMessage();
-     }
+	 $helper = new FacebookRedirectLoginHelper($redirect_url);
+	 $sess = $helper->getSessionFromRedirect();
 	//4. if fb sess exists echo name 
 	 	if(isset($sess)){
 		//Acess long token
