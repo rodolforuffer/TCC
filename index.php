@@ -2,6 +2,15 @@
 
 session_start();
 
+ // connect to mongodb
+   $m = new MongoClient(<kimtkd>:<kimalucard22>@ds055680.mongolab.com:55680/tcc_dados_usuarios);
+   echo "Connection to database successfully";
+   // select a database
+   $db = $m->mydb;
+   echo "Database mydb selected";
+   $collection = $db->createCollection("mycol");
+   echo "Collection created succsessfully";
+
 require_once( 'lib/Facebook/HttpClients/FacebookHttpable.php' );
 require_once( 'lib/Facebook/HttpClients/FacebookCurl.php' );
 require_once( 'lib/Facebook/HttpClients/FacebookCurlHttpClient.php' );
